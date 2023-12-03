@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Day01 {
     public static void main(String[] args) {
 
@@ -31,11 +33,26 @@ treb7uchet
 In this example, the calibration values of these four lines are 12, 38, 15, and 77. Adding these together produces 142.
 Consider your entire calibration document. What is the sum of all of the calibration values?
 
+--- Part Two ---
+
+Your calculation isn't quite right. It looks like some of the digits are actually spelled out with letters:
+one, two, three, four, five, six, seven, eight, and nine also count as valid "digits".
+
+Equipped with this new information, you now need to find the real first and last digit on each line. For example:
+two1nine
+eightwothree
+abcone2threexyz
+xtwone3four
+4nineeightseven2
+zoneight234
+7pqrstsixteen
+In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Adding these together produces 281.
+
          */
 
 
         String input = "eighttkbtzjz6nineeight\n" +
-                "5knjbxgvhktvfcq89onefive\n"  +
+                "5knjbxgvhktvfcq89onefive\n" +
                 "hnjcrxeightonejnlvm4hstmcsevensix\n" +
                 "trsdgcxcseven39dpmzs\n" +
                 "oneninesixtwo26\n" +
@@ -1033,18 +1050,136 @@ Consider your entire calibration document. What is the sum of all of the calibra
                 "7dvt\n" +
                 "blhsm4xcrbrf68ninezvhhtqgphnzxlhl\n" +
                 "9dvjvfourtcthree\n" +
-                "onethreenfkgrvsevenkczctlgkt7";
+                "onethreenfkgrvsevenkczctlgkt7\n";
+
 
 
         String[] splittedInput = input.split("\n");
+
         int sum = 0;
-        for(String eintrag : splittedInput){
-            sum += Integer.parseInt(trebuchetCalibrationValue(eintrag));
+        for(String entry : splittedInput){
+            System.out.println("result : " + trebuchetCalibrationValue(replaceMaxNums(replaceMinNums(entry))) + " Entry: " + entry);
+            sum += Integer.parseInt(trebuchetCalibrationValue(replaceMaxNums(replaceMinNums(entry))));
         }
             System.out.println(sum);
 
+    }
 
+    private static String replaceMinNums(String entry) {
 
+        HashMap<Integer, String> indexMap = new HashMap<>();
+        indexMap.put(entry.indexOf("one"), "one");
+        indexMap.put(entry.indexOf("two"), "two");
+        indexMap.put(entry.indexOf("three"), "three");
+        indexMap.put(entry.indexOf("four"), "four");
+        indexMap.put(entry.indexOf("five"), "five");
+        indexMap.put(entry.indexOf("six"), "six");
+        indexMap.put(entry.indexOf("seven"), "seven");
+        indexMap.put(entry.indexOf("eight"), "eight");
+        indexMap.put(entry.indexOf("nine"), "nine");
+
+        int min = 500;
+        String replacedEntry = "";
+        for(Integer i : indexMap.keySet()){
+            if(i != -1){
+                if(i < min){
+                    min = i;
+                }
+            }
+        }
+        if(indexMap.get(min) != null) {
+            if (indexMap.get(min).equals("one")) {
+                replacedEntry = entry.replace("one", "1");
+            }
+            if (indexMap.get(min).equals("two")) {
+                replacedEntry = entry.replace("two", "2");
+            }
+            if (indexMap.get(min).equals("three")) {
+                replacedEntry = entry.replace("three", "3");
+            }
+            if (indexMap.get(min).equals("four")) {
+                replacedEntry = entry.replace("four", "4");
+            }
+            if (indexMap.get(min).equals("five")) {
+                replacedEntry = entry.replace("five", "5");
+            }
+            if (indexMap.get(min).equals("six")) {
+                replacedEntry = entry.replace("six", "6");
+            }
+            if (indexMap.get(min).equals("seven")) {
+                replacedEntry = entry.replace("seven", "7");
+            }
+            if (indexMap.get(min).equals("eight")) {
+                replacedEntry = entry.replace("eight", "8");
+            }
+            if (indexMap.get(min).equals("nine")) {
+                replacedEntry = entry.replace("nine", "9");
+            }
+            return replacedEntry;
+        }
+        else {
+            return entry;
+        }
+
+//        System.out.println("OldEntry: " + entry + " Index: " + min + " Value: " + indexMap.get(min) +" NewEntry: " + replacedEntry);
+    }
+    private static String replaceMaxNums(String entry) {
+
+        HashMap<Integer, String> indexMap = new HashMap<>();
+        indexMap.put(entry.indexOf("one"), "one");
+        indexMap.put(entry.indexOf("two"), "two");
+        indexMap.put(entry.indexOf("three"), "three");
+        indexMap.put(entry.indexOf("four"), "four");
+        indexMap.put(entry.indexOf("five"), "five");
+        indexMap.put(entry.indexOf("six"), "six");
+        indexMap.put(entry.indexOf("seven"), "seven");
+        indexMap.put(entry.indexOf("eight"), "eight");
+        indexMap.put(entry.indexOf("nine"), "nine");
+
+        int max = -1;
+        for(Integer i : indexMap.keySet()){
+            if(i != -1){
+                if(i > max){
+                    max = i;
+                }
+            }
+        }
+        String replacedEntry = "";
+        if(indexMap.get(max) != null) {
+            if (indexMap.get(max).equals("one")) {
+                replacedEntry = entry.replace("one", "1");
+            }
+            if (indexMap.get(max).equals("two")) {
+                replacedEntry = entry.replace("two", "2");
+            }
+            if (indexMap.get(max).equals("three")) {
+                replacedEntry = entry.replace("three", "3");
+            }
+            if (indexMap.get(max).equals("four")) {
+                replacedEntry = entry.replace("four", "4");
+            }
+            if (indexMap.get(max).equals("five")) {
+                replacedEntry = entry.replace("five", "5");
+            }
+            if (indexMap.get(max).equals("six")) {
+                replacedEntry = entry.replace("six", "6");
+            }
+            if (indexMap.get(max).equals("seven")) {
+                replacedEntry = entry.replace("seven", "7");
+            }
+            if (indexMap.get(max).equals("eight")) {
+                replacedEntry = entry.replace("eight", "8");
+            }
+            if (indexMap.get(max).equals("nine")) {
+                replacedEntry = entry.replace("nine", "9");
+            }
+            return replacedEntry;
+        }
+        else {
+            return entry;
+        }
+
+//        System.out.println("OldEntry: " + entry + " Index: " + max + " Value: " + indexMap.get(max) +" NewEntry: " + replacedEntry);
     }
 
     //Day 1
