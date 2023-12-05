@@ -1,3 +1,3 @@
 # AdventOfCode
-my contribution to this years advent of code =)
+my contribution to the 2023 advent of code =)
 https://adventofcode.com/
